@@ -1,34 +1,59 @@
-﻿List<int> submittedValues = new List<int>();
-string line;
+﻿using NathanOuriach.ConnellsGroup;
 
-Console.WriteLine("----> Please enter values between 4 - 9");
-Console.WriteLine("----> To submit your values, enter 's' in the console");
+List<int> submittedValues = new List<int>();
 
+DisplayAppIntroText();
+RunApp(submittedValues);
+DisplaySubmittedValuesText();
+int totalAverage = CalculateTotalAverage(submittedValues);
+DisplayTotalAverageText(totalAverage);
 
-while ((line = Console.ReadLine()) != "s")
+static void RunApp(List<int> submittedValues)
 {
-    Console.WriteLine("User has entered {0}", line);
-    if (int.Parse(line) >= 4 && int.Parse(line) <= 9)
+    string line;
+    while (!HelperClass.HasUserEnteredSubmit(out line))
     {
-        submittedValues.Add(int.Parse(line));
-    }
-    else
-    {
-        Console.WriteLine("---> {0} is an incorrect value. Please enter values between 4 - 9", line);
+        Console.WriteLine("---> User has entered {0}. To submit values enter 's'", line);
+        int submittedValue;
+        var isInt = int.TryParse(line, out submittedValue);
+        if (isInt && HelperClass.IsValidValue(submittedValue))
+        {
+            submittedValues.Add(submittedValue);
+        }
+        else
+        {
+            Console.WriteLine("---> {0} is an incorrect value. Please enter values between 4 - 9", line);
+        }
     }
 }
 
-Console.WriteLine("----> User has submitted their values");
-Console.WriteLine("----> Submitted values can be found below");
-int totalAverage = 0;
-foreach (var value in submittedValues)
+static void DisplayAppIntroText()
 {
-    Console.WriteLine(value);
-    totalAverage = totalAverage + value;
+    Console.WriteLine("----> Please enter values between 4 - 9");
+    Console.WriteLine("----> To submit your values, enter 's' in the console");
 }
 
-Console.WriteLine("---> Total numbers submitted: {0}", submittedValues.Count);
-totalAverage = totalAverage / submittedValues.Count;
+static void DisplaySubmittedValuesText()
+{
+    Console.WriteLine("----> User has submitted their values");
+    Console.WriteLine("----> Submitted values can be found below");
+}
 
-Console.WriteLine("----> Calculating average...");
-Console.WriteLine("----> Total Average: {0}", totalAverage, 0);
+static int CalculateTotalAverage(List<int> submittedValues)
+{
+    int average = 0; 
+    foreach (var value in submittedValues)
+    {
+        Console.WriteLine(value);
+        average = average + value;
+    }
+
+    Console.WriteLine("---> Total numbers submitted: {0}", submittedValues.Count);
+    average = average / submittedValues.Count;
+    return average;
+}
+
+static void DisplayTotalAverageText(int totalAverage)
+{
+    Console.WriteLine("----> Total Average: {0}", totalAverage);
+}
