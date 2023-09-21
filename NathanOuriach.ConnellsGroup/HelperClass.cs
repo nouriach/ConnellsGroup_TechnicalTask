@@ -15,7 +15,7 @@ namespace NathanOuriach.ConnellsGroup
 
         public static bool HasUserEnteredSubmit(out string line)
         {
-            return (line = Console.ReadLine()) == "s";
+            return (line = Console.ReadLine().ToLower()) == BusinessRules.SubmitValue;
         }
     }
 }

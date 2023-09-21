@@ -13,7 +13,7 @@ static void RunApp(List<int> submittedValues)
     string line;
     while (!HelperClass.HasUserEnteredSubmit(out line))
     {
-        Console.WriteLine("---> User has entered {0}. To submit values enter 's'", line);
+        Console.WriteLine($"---> User has entered {line}. To submit values enter {BusinessRules.SubmitValue}");
         int submittedValue;
         var isInt = int.TryParse(line, out submittedValue);
         if (isInt && HelperClass.IsValidValue(submittedValue))
@@ -22,14 +22,14 @@ static void RunApp(List<int> submittedValues)
         }
         else
         {
-            Console.WriteLine("---> {0} is an incorrect value. Please enter values between 4 - 9", line);
+            Console.WriteLine($"---> {line} is an incorrect value. Please enter values between {BusinessRules.MinimumValue} - {BusinessRules.MaximumValue}");
         }
     }
 }
 
 static void DisplayAppIntroText()
 {
-    Console.WriteLine("----> Please enter values between 4 - 9");
+    Console.WriteLine($"----> Please enter values between {BusinessRules.MinimumValue} - {BusinessRules.MaximumValue}");
     Console.WriteLine("----> To submit your values, enter 's' in the console");
 }
 
@@ -45,15 +45,15 @@ static int CalculateTotalAverage(List<int> submittedValues)
     foreach (var value in submittedValues)
     {
         Console.WriteLine(value);
-        average = average + value;
+        average += value;
     }
 
-    Console.WriteLine("---> Total numbers submitted: {0}", submittedValues.Count);
-    average = average / submittedValues.Count;
+    Console.WriteLine($"---> Total numbers submitted: {submittedValues.Count}");
+    average /= submittedValues.Count;
     return average;
 }
 
 static void DisplayTotalAverageText(int totalAverage)
 {
-    Console.WriteLine("----> Total Average: {0}", totalAverage);
+    Console.WriteLine($"----> Total Average: {totalAverage}");
 }
